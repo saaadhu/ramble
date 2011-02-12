@@ -1,0 +1,30 @@
+grammar Yacc
+	rule grammar
+		space? (grammar_rule space?)+	<Grammar>	
+	end
+
+	rule grammar_rule
+		identifier space? ':' space? rule_body space? <Rule>
+	end
+
+	rule rule_body
+		rule_option space? ('|' space? rule_option space?)* ';' <RuleBody>
+	end
+
+	rule rule_option
+		((identifier / char_literal) space?)+  <RuleOption>
+	end
+
+	rule char_literal
+		"'" . "'" <CharLiteral>
+	end
+
+	rule identifier
+		[a-zA-Z_]+ <Identifier>
+	end
+
+	rule space
+		[\s\r\n]+ 
+	end
+
+end
