@@ -1,22 +1,25 @@
-load 'parser.rb'
-
-def traverse (ast, indent=1)
-	#puts '--' * indent << '>' <<  ast.class.name
-
-	if ast.respond_to? :get_options
-		ast.get_options.each { |option| puts option.generate }	
+class Generator
+	def initialize(transformer)
+		@transformer = transformer
 	end
 
-	return if ast.elements.nil?	
-	ast.elements.each { |element| traverse element, indent + 1 }
-	
+	def generate(name)
+		node = @transformer.get_expansion name
+		return traverse (node)
+	end
+
+	def traverse(node)
+		return node.name if node.children.length == 0
+		str = ''	
+		node.children.each do |child|
+			child_node = @transformer.get_expansion child.name
+			if (child_node.nil?)
+				str << child.name
+			else
+				str << traverse(child_node)		
+			end
+		end
+
+		return str
+	end
 end
-
-contents = ''
-File.open('grammar.y') do |f|
-	contents = f.read
-end
-ast = Parser.parse contents
-
-
-traverse ast
