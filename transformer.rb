@@ -1,4 +1,6 @@
 class Node
+	attr_accessor :syntaxNode
+
 	def initialize(name)
 		@name = name
 		@children = []
@@ -42,6 +44,7 @@ class Transformer
 				parent_node = root_node
 				option_members.each do |member|
 					member_node = Node.new member.name
+					member_node.syntaxNode = member
 					parent_node.add_child member_node
 					parent_node = member_node
 				end

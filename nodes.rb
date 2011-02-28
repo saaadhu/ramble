@@ -20,7 +20,7 @@ module Yacc
 			return "x"
 		end
 		def name
-			return elements[0].text_value
+			return text_value
 		end
 	end
 	class Rule < Treetop::Runtime::SyntaxNode
@@ -69,10 +69,10 @@ module Yacc
 			return self.text_value
 		end
 		def generate
-			return "#{self.text_value}"
+			return text_value[1..-2]
 		end
 		def name
-			return self.text_value
+			return text_value
 		end
 	end
 	class Grammar < Treetop::Runtime::SyntaxNode

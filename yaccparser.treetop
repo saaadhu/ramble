@@ -16,7 +16,7 @@ grammar Yacc
 	end
 
 	rule char_literal
-		"'" . "'" <CharLiteral>
+		"'" ('\\')? . "'" <CharLiteral>
 	end
 
 	rule identifier
